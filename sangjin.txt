@@ -1,0 +1,174 @@
+
+
+
+
+http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Melodic%20on%20the%20Raspberry%20Pi
+
+https://github.com/cartographer-project/cartographer_ros/issues/485
+
+https://github.com/mavlink/mavros/blob/master/mavros/README.md#source-installation
+
+https://answers.ros.org/question/320266/installation-mavrosgeographic_msgs-error/
+
+https://stackoverflow.com/questions/37582508/silence-cmp0048-warnings-in-vendored-projects
+
+
+geographic_msgs
+uuid_msgs
+angles
+eigen_conversions
+orocos_kdl
+nav_msgs
+tf2_eigen
+tf2
+tf2_msgs
+tf2_ros
+tf2_py
+trajectory_msgs
+tf
+visualization_msgs
+control_toolbox
+control_msgs
+dynamic_reconfigure
+
+https://github.com/mavlink/mavros/issues/856
+
+
+date
+date -s '2021-10-05 15:18:20'
+date
+date -s
+sudo date --set "05 Oct 2021 15:20:10"
+ping 8.8.8.8
+cat ~/.bash_history
+date --set
+date --help
+lsb_release -a
+lsb_release -sc\
+sudo apt-get install python-catkin-tools python-rosinstall-generator -y
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt-key adv --keyserver hkp://keyserver.openpgp.org:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt install -y python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential cmake
+sudo rosdep init
+rosdep update
+mkdir -p ~/ros_catkin_ws
+cd ~/ros_catkin_ws
+rosinstall_generator ros_comm --rosdistro melodic --deps --wet-only --tar > melodic-ros_comm-wet.rosinstall
+wstool init src melodic-ros_comm-wet.rosinstall
+rosdep install -y --from-paths src --ignore-src --rosdistro melodic -r --os=debian:buster
+sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/melodic
+sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/melodic -j2
+source /opt/ros/melodic/setup.bash
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+rosinstall_generator ros_comm ros_control joystick_drivers --rosdistro melodic --deps --wet-only --tar > melodic-custom_ros.rosinstall
+wstool merge -t src melodic-custom_ros.rosinstall
+wstool update -t src
+rosdep install --from-paths src --ignore-src --rosdistro melodic -y -r --os=debian:buster
+sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/melodic -j2
+sudo apt-get install python-catkin-tools python-rosinstall-generator -y
+cd ..
+mkdir -p ~/catkin_build_ws/src
+cd catkin_build_ws/
+catkin init
+wstool init src
+rosinstall_generator --rosdistro kinetic mavlink | tee /tmp/mavros.rosinstall
+rosinstall_generator --upstream mavros | tee -a /tmp/mavros.rosinstall
+wstool merge -t src /tmp/mavros.rosinstall
+wstool update -t src -j2
+rosdep install --from-paths src --ignore-src -y
+rosdep install --from-paths src --ignore-src --rosdistro melodic -y -r --os=debian:buster
+catkin build
+sudo apt-get install ros-kinetic-geographic
+rosinstall_generator -rosdistro melodic geographic_msgs | tee -a /tmp/mavros.rosinstall 
+rosinstall_generator --rosdistro melodic geographic_msgs | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic uuid_msgs | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic angles | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic eigen_conversions | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic orocos_kdl | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic nav_msgs | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic tf2_eigen | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic tf2 | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic tf2_msgs | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic tf2_ros | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic tf2_py | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+cat ~/.bash_history
+rosinstall_generator --rosdistro melodic trajectory_msgs | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic tf | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic visualization_msgs | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic control_toolbox | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic control_msgs | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+rosinstall_generator --rosdistro melodic dynamic_reconfigure | tee -a /tmp/mavros.rosinstall 
+wstool merge -t src /tmp/mavros.rosinstall 
+wstool update -t src -j2
+catkin build
+ls
+cd src/
+ls
+cd mavros/
+ls
+cd ..
+. devel/setup.bash 
+roslaunch mavros px4.launch 
+./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
+sudo ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
+catkin build
+. devel/setup.bash 
+roslaunch mavros px4.launch 
+ls /dev/tty*
+mousepad ./src/mavros/mavros/launch/px4.launch 
+roslaunch mavros px4.launch 
+ls /dev/tty*
+. devel/setup.bash 
+roslaunch mavros px4.launch 
